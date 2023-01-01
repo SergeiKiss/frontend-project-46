@@ -1,0 +1,25 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+  	"gendiff": "bin/gendiff.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergeiKiss/frontend-project-46.git"
+  },
+  "author": "Sergei KISS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SergeiKiss/frontend-project-46/issues"
+  },
+  "type": "module",
+  "homepage": "https://github.com/SergeiKiss/frontend-project-46#readme",
+  "dependencies": {
+    "commander": "^9.4.1"
+  }
+}
