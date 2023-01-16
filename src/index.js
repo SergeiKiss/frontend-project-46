@@ -15,8 +15,8 @@ const stringify = (value, replacer = ' ', spacesCount = 1) => {
 
 const genDiff = (file1, file2) => {
   const result = {};
-  const data1 = JSON.parse(fs.readFileSync(file1, 'utf8'));
-  const data2 = JSON.parse(fs.readFileSync(file2, 'utf8'));
+  const data1 = JSON.parse(fs.readFileSync(file1, 'utf-8'));
+  const data2 = JSON.parse(fs.readFileSync(file2, 'utf-8'));
   const keys1 = Object.keys(data1);
   const keys2 = Object.keys(data2);
   const sortedUnionKeys = _.sortBy(_.union(keys1, keys2), (k) => k);
@@ -31,6 +31,6 @@ const genDiff = (file1, file2) => {
       result[`+ ${key}`] = value2;
     }
   });
-  console.log(stringify(result));
+  return stringify(result);
 };
 export default genDiff;

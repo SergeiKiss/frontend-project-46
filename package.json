@@ -7,7 +7,7 @@
     "gendiff": "bin/gendiff.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx jest"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "type": "module",
   "homepage": "https://github.com/SergeiKiss/frontend-project-46#readme",
   "dependencies": {
+    "@jest/globals": "^29.3.1",
     "commander": "^9.4.1",
     "lodash": "^4.17.21"
   },

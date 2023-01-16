@@ -3,3 +3,6 @@ install:
 
 lint:
 	npx eslint .
+
+test:
+	npx jest

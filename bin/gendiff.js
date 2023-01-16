@@ -7,6 +7,6 @@ program
   .version('1.0.0', '-V, --version', 'output the version number')
   .option('-f, --format <type>', 'output format')
   .arguments('<filepath1> <filepath2>')
-  .action(gendiff);
+  .action((file1, file2) => console.log(gendiff(file1, file2)));
 
 program.parse();
