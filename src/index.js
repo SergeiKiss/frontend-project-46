@@ -1,5 +1,5 @@
-import * as fs from 'node:fs';
 import _ from 'lodash';
+import parse from './parsers.js';
 
 const stringify = (value, replacer = ' ', spacesCount = 1) => {
   const iter = (el, counter) => {
@@ -15,8 +15,8 @@ const stringify = (value, replacer = ' ', spacesCount = 1) => {
 
 const genDiff = (file1, file2) => {
   const result = {};
-  const data1 = JSON.parse(fs.readFileSync(file1, 'utf-8'));
-  const data2 = JSON.parse(fs.readFileSync(file2, 'utf-8'));
+  const data1 = parse(file1);
+  const data2 = parse(file2);
   const keys1 = Object.keys(data1);
   const keys2 = Object.keys(data2);
   const sortedUnionKeys = _.sortBy(_.union(keys1, keys2), (k) => k);
