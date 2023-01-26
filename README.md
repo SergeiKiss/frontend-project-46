@@ -5,5 +5,5 @@
 <a href="https://codeclimate.com/github/SergeiKiss/frontend-project-46/test_coverage"><img src="https://api.codeclimate.com/v1/badges/4e3fe545976e43a59f7b/test_coverage" /></a>
 
 
-https://asciinema.org/a/GYG3JwYdjSWnq8Qs54l0qbH26 - package example (json)
+https://asciinema.org/a/GYG3JwYdjSWnq8Qs54l0qbH26 - package example (json)<br>
 https://asciinema.org/a/e5eTZnopEKjBDUI0HnhPQtPtV - package example (json, yaml)
