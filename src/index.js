@@ -17,7 +17,7 @@ const getIndent = (depth, spacesCount = 4) => ' '.repeat((depth * spacesCount) -
 
 const getBracketIndent = (depth, spacesCount = 4) => ' '.repeat((depth * spacesCount) - spacesCount);
 
-export const stringify = (currentValue, depth = 1) => {
+const stringify = (currentValue, depth = 1) => {
   if (!_.isObject(currentValue)) {
     return `${currentValue}`;
   }

@@ -6,4 +6,5 @@
 
 
 https://asciinema.org/a/GYG3JwYdjSWnq8Qs54l0qbH26 - package example (json)<br>
-https://asciinema.org/a/e5eTZnopEKjBDUI0HnhPQtPtV - package example (json, yaml)
+https://asciinema.org/a/e5eTZnopEKjBDUI0HnhPQtPtV - package example (json, yaml)<br>
+https://asciinema.org/a/sOMfMbQ10pi9RYEq2vbul99C7 - package example (tree structures)
