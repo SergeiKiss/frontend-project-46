@@ -8,9 +8,8 @@ program
   .option('-f, --format <type>', 'output format', 'stylish')
   .arguments('<filepath1> <filepath2>')
   .action((file1, file2, options) => {
-    if (options.format === 'stylish') {
-      console.log(gendiff(file1, file2));
-    }
+    const { format } = options;
+    console.log(gendiff(file1, file2, format));
   });
 
 program.parse();
