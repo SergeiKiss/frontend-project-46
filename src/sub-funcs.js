@@ -1,5 +1,13 @@
 import _ from 'lodash';
 
+export const isPlainObject = (o) => {
+  const values = Object.values(o);
+  return values.reduce((acc, value) => {
+    if (acc === false || _.isObject(value)) return false;
+    return true;
+  }, true);
+};
+
 export const plainStringify = (value, replacer = ' ', spacesCount = 1) => {
   const iter = (el, counter) => {
     const arr = Object.entries(el).map(([key, val]) => {
@@ -16,36 +24,34 @@ export const getIndent = (depth, spacesCount = 4) => ' '.repeat((depth * spacesC
 
 export const getBracketIndent = (depth, spacesCount = 4) => ' '.repeat((depth * spacesCount) - spacesCount);
 
-export const stringify = (currentValue, depth = 1) => {
-  if (!_.isObject(currentValue)) {
-    return `${currentValue}`;
-  }
+export const stringify = (value) => {
+  if (isPlainObject(value)) return plainStringify(value);
 
-  const indent = getIndent(depth);
-  const bracketIndent = getBracketIndent(depth);
-  const lines = Object
-    .entries(currentValue)
-    .map(([key, val]) => {
-      const firstKeyEl = key[0];
-      if (firstKeyEl === '+' || firstKeyEl === '-') {
-        return `${indent}${key}: ${stringify(val, depth + 1)}`;
-      }
-      return `${indent}  ${key}: ${stringify(val, depth + 1)}`;
-    });
+  const iter = (currentValue, depth = 1) => {
+    if (!_.isObject(currentValue)) {
+      return `${currentValue}`;
+    }
 
-  return [
-    '{',
-    ...lines,
-    `${bracketIndent}}`,
-  ].join('\n');
-};
+    const indent = getIndent(depth);
+    const bracketIndent = getBracketIndent(depth);
+    const lines = Object
+      .entries(currentValue)
+      .map(([key, val]) => {
+        const firstKeyEl = key[0];
+        if (firstKeyEl === '+' || firstKeyEl === '-') {
+          return `${indent}${key}: ${iter(val, depth + 1)}`;
+        }
+        return `${indent}  ${key}: ${iter(val, depth + 1)}`;
+      });
 
-export const isPlainObject = (o) => {
-  const values = Object.values(o);
-  return values.reduce((acc, value) => {
-    if (acc === false || _.isObject(value)) return false;
-    return true;
-  }, true);
+    return [
+      '{',
+      ...lines,
+      `${bracketIndent}}`,
+    ].join('\n');
+  };
+
+  return iter(value);
 };
 
 export const calcDiff = (o1, o2) => {
