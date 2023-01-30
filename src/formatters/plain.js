@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 export default (diff) => {
   const startPhrase = (path) => `Property '${path}'`;
-  const added = (addedValue = '[complex value]') => {
+  const added = (addedValue) => {
     if (addedValue === '[complex value]') return ` was added with value: ${addedValue}`;
     if (_.isString(addedValue)) return ` was added with value: '${addedValue}'`;
     return ` was added with value: ${addedValue}`;
@@ -17,12 +17,11 @@ export default (diff) => {
     }, []);
     return ` was updated. From ${newValues[0]} to ${newValues[1]}`;
   };
-  const createPhrase = (start, condition) => `${start}${condition}\n`;
+  const createPhrase = (start, condition) => `${start}${condition}`;
 
   const iter = (tree, currentPath) => {
-    let result = '';
     const keys = Object.keys(tree);
-    keys.forEach((key, index) => {
+    const result = keys.reduce((acc, key, index) => {
       const splitedKey = key.split(' ');
       const sign = splitedKey[0];
       const actualKey = splitedKey[splitedKey.length - 1];
@@ -35,19 +34,20 @@ export default (diff) => {
       const previousSplitedKey = keys[index - 1] ? keys[index - 1].split(' ') : [];
       const previousActualKey = previousSplitedKey[previousSplitedKey.length - 1];
 
-      if (actualKey === previousActualKey) return;
+      if (actualKey === previousActualKey) return acc;
 
       const newCurrentPath = [...currentPath, actualKey];
       const strPath = newCurrentPath.join('.');
 
       if (actualKey === nextActualKey) {
-        result += createPhrase(startPhrase(strPath), updated(value, nextValue));
+        return [...acc, createPhrase(startPhrase(strPath), updated(value, nextValue))];
       }
-      if (sign !== '+' && sign !== '-' && _.isObject(value)) result += iter(value, newCurrentPath);
-      if (sign === '-' && actualKey !== nextActualKey) result += createPhrase(startPhrase(strPath), removed);
-      if (sign === '+' && actualKey !== nextActualKey) result += createPhrase(startPhrase(strPath), _.isObject(value) ? added() : added(value));
-    });
-    return result;
+      if (sign !== '+' && sign !== '-' && _.isObject(value)) return [...acc, iter(value, newCurrentPath)];
+      if (sign === '-' && actualKey !== nextActualKey) return [...acc, createPhrase(startPhrase(strPath), removed)];
+      if (sign === '+' && actualKey !== nextActualKey) return [...acc, createPhrase(startPhrase(strPath), _.isObject(value) ? added('[complex value]') : added(value))];
+      return acc;
+    }, []);
+    return result.join('\n');
   };
 
   return iter(diff, []).trimEnd();
