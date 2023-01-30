@@ -4,6 +4,8 @@ import stringifyJSON from './json.js';
 
 export default (formatName) => {
   switch (formatName) {
+    case 'stylish':
+      return stringifyStylish;
     case 'plain':
       return stringifyPlain;
 
@@ -11,6 +13,6 @@ export default (formatName) => {
       return stringifyJSON;
 
     default:
-      return stringifyStylish;
+      throw new Error('Unknown formatter');
   }
 };

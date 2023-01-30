@@ -19,7 +19,7 @@ const isObject = (value, iter) => {
 
 export default (diff) => {
   const iter = (tree) => {
-    const result = [];
+    let result = [];
     const keys = Object.keys(tree);
     keys.forEach((key, index) => {
       const splitedKey = key.split(' ');
@@ -36,10 +36,10 @@ export default (diff) => {
 
       if (actualKey === previousActualKey) return;
 
-      if (actualKey === nextActualKey) result.push(createUpdatedItem(actualKey, 'updated', isObject(value, iter), isObject(nextValue, iter)));
-      if (sign !== '+' && sign !== '-') result.push(createItem(actualKey, null, isObject(value, iter)));
-      if (sign === '-' && actualKey !== nextActualKey) result.push(createItem(actualKey, 'removed', isObject(value, iter)));
-      if (sign === '+' && actualKey !== nextActualKey) result.push(createItem(actualKey, 'added', isObject(value, iter)));
+      if (actualKey === nextActualKey) result = [...result, createUpdatedItem(actualKey, 'updated', isObject(value, iter), isObject(nextValue, iter))];
+      if (sign !== '+' && sign !== '-') result = [...result, createItem(actualKey, null, isObject(value, iter))];
+      if (sign === '-' && actualKey !== nextActualKey) result = [...result, createItem(actualKey, 'removed', isObject(value, iter))];
+      if (sign === '+' && actualKey !== nextActualKey) result = [...result, createItem(actualKey, 'added', isObject(value, iter))];
     });
     return result;
   };
