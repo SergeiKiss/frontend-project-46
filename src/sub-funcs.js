@@ -25,8 +25,7 @@ export const calcDiff = (o1, o2) => {
     }
     if (keys1.includes(key) && !keys2.includes(key)) return { ...acc, [`- ${key}`]: value1 };
     if (!keys1.includes(key) && keys2.includes(key)) return { ...acc, [`+ ${key}`]: value2 };
-    if (keys1.includes(key) && keys2.includes(key) && value1 !== value2) return { ...acc, [`- ${key}`]: value1, [`+ ${key}`]: value2 };
-    return acc;
+    return { ...acc, [`- ${key}`]: value1, [`+ ${key}`]: value2 };
   }, {});
   return result;
 };
