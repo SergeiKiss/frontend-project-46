@@ -37,8 +37,9 @@ export default (diff) => {
 
       if (actualKey === nextActualKey) return [...acc, createUpdatedItem(actualKey, 'updated', isObject(value, iter), isObject(nextValue, iter))];
       if (actualKey !== nextActualKey) {
-        if (sign === '-') return [...acc, createItem(actualKey, 'removed', isObject(value, iter))];
-        if (sign === '+') return [...acc, createItem(actualKey, 'added', isObject(value, iter))];
+        if (sign === '-' || sign === '+') {
+          return sign === '-' ? [...acc, createItem(actualKey, 'removed', isObject(value, iter))] : [...acc, createItem(actualKey, 'added', isObject(value, iter))];
+        }
       }
       return [...acc, createItem(actualKey, null, isObject(value, iter))];
     }, []);

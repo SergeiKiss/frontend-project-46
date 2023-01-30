@@ -43,8 +43,11 @@ export default (diff) => {
         return [...acc, createPhrase(startPhrase(strPath), updated(value, nextValue))];
       }
       if (sign !== '+' && sign !== '-' && _.isObject(value)) return [...acc, iter(value, newCurrentPath)];
-      if (sign === '-' && actualKey !== nextActualKey) return [...acc, createPhrase(startPhrase(strPath), removed)];
-      if (sign === '+' && actualKey !== nextActualKey) return [...acc, createPhrase(startPhrase(strPath), _.isObject(value) ? added('[complex value]') : added(value))];
+      if (actualKey !== nextActualKey) {
+        if (sign === '-' || sign === '+') {
+          return sign === '-' ? [...acc, createPhrase(startPhrase(strPath), removed)] : [...acc, createPhrase(startPhrase(strPath), _.isObject(value) ? added('[complex value]') : added(value))];
+        }
+      }
       return acc;
     }, []);
     return result.join('\n');

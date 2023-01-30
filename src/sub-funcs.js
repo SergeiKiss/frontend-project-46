@@ -16,13 +16,8 @@ export const calcDiff = (o1, o2) => {
     const value1 = o1[key];
     const value2 = o2[key];
 
-    if (_.isObject(value1) && _.isObject(value2)) {
-      return { ...acc, [`${key}`]: calcDiff(value1, value2) };
-    }
-    if (value1 === value2) {
-      if (isPlainObject(o1)) return { ...acc, [`  ${key}`]: value1 };
-      return { ...acc, [`${key}`]: value1 };
-    }
+    if (_.isObject(value1) && _.isObject(value2)) return { ...acc, [`${key}`]: calcDiff(value1, value2) };
+    if (value1 === value2) return isPlainObject(o1) ? { ...acc, [`  ${key}`]: value1 } : { ...acc, [`${key}`]: value1 };
     if (keys1.includes(key) && !keys2.includes(key)) return { ...acc, [`- ${key}`]: value1 };
     if (!keys1.includes(key) && keys2.includes(key)) return { ...acc, [`+ ${key}`]: value2 };
     return { ...acc, [`- ${key}`]: value1, [`+ ${key}`]: value2 };
