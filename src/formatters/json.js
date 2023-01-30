@@ -19,9 +19,8 @@ const isObject = (value, iter) => {
 
 export default (diff) => {
   const iter = (tree) => {
-    let result = [];
     const keys = Object.keys(tree);
-    keys.forEach((key, index) => {
+    const result = keys.reduce((arr, key, index) => {
       const splitedKey = key.split(' ');
       const sign = splitedKey[0];
       const actualKey = splitedKey[splitedKey.length - 1];
@@ -34,13 +33,14 @@ export default (diff) => {
       const previousSplitedKey = keys[index - 1] ? keys[index - 1].split(' ') : [];
       const previousActualKey = previousSplitedKey[previousSplitedKey.length - 1];
 
-      if (actualKey === previousActualKey) return;
+      if (actualKey === previousActualKey) return arr;
 
-      if (actualKey === nextActualKey) result = [...result, createUpdatedItem(actualKey, 'updated', isObject(value, iter), isObject(nextValue, iter))];
-      if (sign !== '+' && sign !== '-') result = [...result, createItem(actualKey, null, isObject(value, iter))];
-      if (sign === '-' && actualKey !== nextActualKey) result = [...result, createItem(actualKey, 'removed', isObject(value, iter))];
-      if (sign === '+' && actualKey !== nextActualKey) result = [...result, createItem(actualKey, 'added', isObject(value, iter))];
-    });
+      if (actualKey === nextActualKey) return [...arr, createUpdatedItem(actualKey, 'updated', isObject(value, iter), isObject(nextValue, iter))];
+      if (sign !== '+' && sign !== '-') return [...arr, createItem(actualKey, null, isObject(value, iter))];
+      if (sign === '-' && actualKey !== nextActualKey) return [...arr, createItem(actualKey, 'removed', isObject(value, iter))];
+      if (sign === '+' && actualKey !== nextActualKey) return [...arr, createItem(actualKey, 'added', isObject(value, iter))];
+      return null;
+    }, []);
     return result;
   };
 
